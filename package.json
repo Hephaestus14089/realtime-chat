@@ -1,0 +1,12 @@
+{
+  "name": "realtime-chat",
+  "version": "1.0.0",
+  "description": "a simple real-time chat application",
+  "main": "index.js",
+  "repository": "https://github.com/Hephaestus14089/realtime-chat",
+  "author": "Bhargav Das Gupta",
+  "license": "WTFPL",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
