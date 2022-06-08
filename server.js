@@ -1,9 +1,25 @@
-var express = require('express');
+const express = require('express');
 
-var app = express();
+const app = express();
 
-var server = app.listen(3000, () => {
+const server = app.listen(3000, () => {
   console.log("server is running on port", server.address().port);
 });
+
+// db connection
+let db;
+
+connectToDB((err) => {
+  /*
+    the call back function
+    that the connectToDB function expects as 'cb_func'
+    as its arguments
+  */
+
+  if (!err) {
+    db = getDB();
+  } // end of outer if block
+});
+
 
 app.use(express.static(__dirname));
