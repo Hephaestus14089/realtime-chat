@@ -1,25 +1,38 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
 
-const server = app.listen(3000, () => {
-  console.log("server is running on port", server.address().port);
+// mongodb atlas connection and server creation
+const dbUrl = 'mongodb+srv://bhargav:iWjp2xeF3TB9pfV@cluster0.jrxds.mongodb.net/?retryWrites=true&w=majority';
+
+let server;
+
+mongoose.connect(dbUrl, (err) => {
+
+  if (err) {
+      console.log("unable to connect to db :(");
+      console.log("Exiting...");
+      console.log("err:", err);
+  }
+  else {
+      console.log("db connection established...");
+
+      // create server and listen on port
+      server = app.listen(3000, () => {
+        console.log("server is running on port", server.address().port);
+      });
+  }
 });
 
-// db connection
-let db;
+// defining schema
+const messageSchema = {
+  name: String,
+  text: String
+};
 
-connectToDB((err) => {
-  /*
-    the call back function
-    that the connectToDB function expects as 'cb_func'
-    as its arguments
-  */
-
-  if (!err) {
-    db = getDB();
-  } // end of outer if block
-});
-
+// compiling model
+const messageModel = ('Message', messageSchema);
+>>>>>>> development/atlas-mongodb-server
 
 app.use(express.static(__dirname));
