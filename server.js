@@ -33,6 +33,5 @@ const messageSchema = {
 
 // compiling model
 const messageModel = ('Message', messageSchema);
->>>>>>> development/atlas-mongodb-server
 
 app.use(express.static(__dirname));
