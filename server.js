@@ -1,7 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(express.static(__dirname));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 // mongodb atlas connection and server creation
 const dbUrl = 'mongodb+srv://bhargav:iWjp2xeF3TB9pfV@cluster0.jrxds.mongodb.net/?retryWrites=true&w=majority';
@@ -25,13 +31,32 @@ mongoose.connect(dbUrl, (err) => {
   }
 });
 
-// defining schema
-const messageSchema = {
+// defining schema and compiling model
+const Message = ('Message', {
   name: String,
   text: String
-};
+});
 
-// compiling model
-const messageModel = ('Message', messageSchema);
 
-app.use(express.static(__dirname));
+// ROUTES
+
+app.get('/messages', (req, res) => {
+  Message.find({}, (err, messages) => {
+    if (err)
+      res.sendStatus(500);
+    else
+      res.send(messages);
+  });
+});
+
+app.post('/messages', (req, res) => {
+
+  let message = new Message(req.body);
+
+  message.save(err => {
+    if (err)
+      res.sendStatus(500);
+    else
+      res.sendStatus(200);
+  })
+});
