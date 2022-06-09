@@ -32,7 +32,7 @@ mongoose.connect(dbUrl, (err) => {
 });
 
 // defining schema and compiling model
-const Message = ('Message', {
+const Message = mongoose.model('Message', {
   name: String,
   text: String
 });
