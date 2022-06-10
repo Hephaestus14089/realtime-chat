@@ -16,7 +16,7 @@ $(() => {
     $('#message').append(`
         <h4> ${message.name} </h4>
         <p> ${message.text} </p>
-    `)
+    `);
   }
 
   function getMessages() {
@@ -26,6 +26,6 @@ $(() => {
   }
 
   function sendMessage(message) {
-    $.post('http://localhost:3000/messages', message)
+    $.post('http://localhost:3000/messages', message);
   }
 });
