@@ -1,13 +1,16 @@
 $(() => {
 
   const socket = io();
-  socket.on('message', addMessages);
+  socket.on('message', addMessage);
 
   $('#send').click(() => {
     sendMessage({
       name: $('#name').val(),
       text: $('#message').val()
     });
+
+    $('#name').val("");
+    $('#message').val("");
 
     getMessages();
   });
