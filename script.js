@@ -1,10 +1,16 @@
 $(() => {
 
+  const socket = io();
+  socket.on('message', addMessage);
+
   $('#send').click(() => {
     sendMessage({
       name: $('#name').val(),
       text: $('#message').val()
     });
+
+    $('#name').val("");
+    $('#message').val("");
 
     getMessages();
   });
@@ -23,6 +29,6 @@ $(() => {
   }
 
   function sendMessage(message) {
-    $.post('http://localhost:3000/messages', message)
+    $.post('http://localhost:3000/messages', message);
   }
 });

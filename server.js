@@ -4,10 +4,17 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 app.use(express.static(__dirname));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+io.on('connection', () => {
+  console.log('a user is connected');
+});
 
 // mongodb atlas connection and server creation
 const dbUrl = 'mongodb+srv://bhargav:iWjp2xeF3TB9pfV@cluster0.jrxds.mongodb.net/?retryWrites=true&w=majority';
@@ -25,8 +32,9 @@ mongoose.connect(dbUrl, (err) => {
       console.log("db connection established...");
 
       // create server and listen on port
-      server = app.listen(3000, () => {
-        console.log("server is running on port", server.address().port);
+      server = http.listen(3000, (err) => {
+        if (err) console.log("unable to listen on port...") && console.log("err: ", err);
+        else console.log("server is running on port", server.address().port);
       });
   }
 });
@@ -54,9 +62,11 @@ app.post('/messages', (req, res) => {
   let message = new Message(req.body);
 
   message.save(err => {
-    if (err)
-      res.sendStatus(500);
-    else
+    if (err) {
+      io.emit('message', req.body);
       res.sendStatus(200);
+    }
+    else
+      res.sendStatus(500);
   })
 });
