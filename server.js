@@ -59,7 +59,7 @@ app.get('/messages', (req, res) => {
 
 app.post('/messages', (req, res) => {
 
-  if (req.body.name == "" || req.body.text == "")
+  if (req.body.name.trim() == "" || req.body.text.trim() == "")
     res.sendStatus(500);
 
   let message = new Message(req.body);

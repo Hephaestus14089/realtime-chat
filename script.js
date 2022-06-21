@@ -5,12 +5,15 @@ $(() => {
 
   $('#send').click(() => {
 
-    if ($('#name').val() == "" || $('#message').val() == "")
+    let name = $('#name').val().trim();
+    let message = $('#message').val().trim();
+
+    if (name == "" || message == "")
       alert("empty fields are not allowed");
     else {
       sendMessage({
-        name: $('#name').val(),
-        text: $('#message').val()
+        name: name,
+        text: message
       });
     }
 
