@@ -59,6 +59,9 @@ app.get('/messages', (req, res) => {
 
 app.post('/messages', (req, res) => {
 
+  if (req.body.name == "" || req.body.text == "")
+    res.sendStatus(500);
+
   let message = new Message(req.body);
 
   message.save(err => {

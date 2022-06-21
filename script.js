@@ -4,10 +4,15 @@ $(() => {
   socket.on('message', addMessage);
 
   $('#send').click(() => {
-    sendMessage({
-      name: $('#name').val(),
-      text: $('#message').val()
-    });
+
+    if ($('#name').val() == "" || $('#message').val() == "")
+      alert("empty fields are not allowed");
+    else {
+      sendMessage({
+        name: $('#name').val(),
+        text: $('#message').val()
+      });
+    }
 
     $('#name').val("");
     $('#message').val("");
