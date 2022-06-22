@@ -5,8 +5,8 @@ $(() => {
 
   $('#send').click(() => {
 
-    let name = $('#name').val().trim();
-    let message = $('#message').val().trim();
+    const name = $('#name').val().trim();
+    const message = $('#message').val().trim();
 
     if (name == "" || message == "")
       alert("empty fields are not allowed");
